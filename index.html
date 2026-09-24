@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elastic{ON} Mumbai 2026 — 16:9 Graphic Generator (1920 × 1080)</title>
+    <meta name="description"
+        content="Production-quality editable 1920x1080 px (16:9) event graphic generator for Elastic{ON} Mumbai 2026.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,400..900&family=Roboto+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* ============================================================
+   DESIGN TOKENS & SHELL STYLES
+============================================================ */
+        :root {
+            --eb: #0B64DD;
+            --ec: #00BFB3;
+            --ep: #BC1E70;
+            --ey: #FACB3D;
+            --en: #05164D;
+            --nb: #0D0D0D;
+            --bg: #EEF0F5;
+            --f1: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --f2: 'Roboto Mono', monospace;
+            --shell: #080C16;
+            --panel: #0F1623;
+            --pborder: rgba(255, 255, 255, 0.08);
+            --ibg: #181F2E;
+            --iborder: #242E42;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            background: var(--shell);
+            color: #E5E7EB;
+            font-family: var(--f1);
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* TOPBAR */
+        .tb {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            height: 56px;
+            min-height: 56px;
+            background: rgba(15, 22, 35, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--pborder);
+            z-index: 200;
+            flex-shrink: 0;
+        }
+
+        .tb-l {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tb-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--eb), var(--ec));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .tb-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+
+        .tb-sub {
+            font-size: 0.68rem;
+            color: #6B7280;
+            font-family: var(--f2);
+        }
+
+        .tb-r {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-family: var(--f1);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.18s;
+            white-space: nowrap;
+        }
+
+        .btn-p {
+            background: linear-gradient(135deg, var(--eb) 0%, #0050C0 100%);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(11, 100, 221, 0.4);
+        }
+
+        .btn-p:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 7px 20px rgba(11, 100, 221, 0.5);
+        }
+
+        .btn-p:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-g {
+            background: transparent;
+            color: #9CA3AF;
+            border: 1px solid var(--pborder);
+        }
+
+        .btn-g:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #F3F4F6;
+        }
+
+        /* WORKSPACE SPLIT */
+        .ws {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR CONTROLS */
+        .sb {
+            width: 380px;
+            min-width: 380px;
+            background: var(--panel);
+            border-right: 1px solid var(--pborder);
+            overflow-y: auto;
+            padding: 20px 20px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--iborder) transparent;
+        }
+
+        .sb::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sb::-webkit-scrollbar-thumb {
+            background: var(--iborder);
+            border-radius: 2px;
+        }
+
+        .sec {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sec-t {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ec);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 191, 179, 0.15);
+        }
+
+        .sec-t::before {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background: var(--ec);
+            border-radius: 2px;
+        }
+
+        .fg {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .lbl {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #9CA3AF;
+            letter-spacing: 0.02em;
+        }
+
+        .hnt {
+            font-size: 0.65rem;
+            color: #4B5563;
+            font-style: italic;
+        }
+
+        .fi {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--ibg);
+            border: 1px solid var(--iborder);
+            border-radius: 7px;
+            color: #E5E7EB;
+            font-family: var(--f1);
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .fi:focus {
+            border-color: var(--eb);
+            box-shadow: 0 0 0 3px rgba(11, 100, 221, 0.18);
+        }
+
+        .fi::placeholder {
+            color: #4B5563;
+        }
+
+        .upz {
+            position: relative;
+            border: 2px dashed var(--iborder);
+            border-radius: 9px;
+            padding: 16px;
+            text-align: center;
+            background: rgba(24, 31, 46, 0.5);
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+
+        .upz:hover,
+        .upz.drag-over {
+            border-color: var(--eb);
+            background: rgba(11, 100, 221, 0.08);
+        }
+
+        .upz input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upz-icon {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto 8px;
+            border-radius: 8px;
+            background: rgba(11, 100, 221, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upz-img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 8px;
+            border: 2px solid var(--eb);
+            display: none;
+        }
+
+        .upz-m {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #D1D5DB;
+        }
+
+        .upz-s {
+            font-size: 0.68rem;
+            color: #6B7280;
+            margin-top: 2px;
+        }
+
+        .slg {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .slh {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sll {
+            font-size: 0.72rem;
+            color: #9CA3AF;
+        }
+
+        .slv {
+            font-size: 0.72rem;
+            font-family: var(--f2);
+            color: var(--ec);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--eb);
+            cursor: pointer;
+        }
+
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .pill {
+            padding: 5px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--iborder);
+            background: var(--ibg);
+            color: #9CA3AF;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .pill:hover {
+            border-color: var(--eb);
+            color: #E5E7EB;
+        }
+
+        .pill.active {
+            background: rgba(11, 100, 221, 0.18);
+            border-color: var(--eb);
+            color: #3B82F6;
+        }
+
+        .cdots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .cdot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.15s, border-color 0.15s;
+        }
+
+        .cdot:hover {
+            transform: scale(1.2);
+        }
+
+        .cdot.sel {
+            border-color: #FFFFFF;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .bw-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--ibg);
+            border: 1px solid var(--iborder);
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.15s;
+            user-select: none;
+        }
+
+        .bw-toggle:hover {
+            border-color: var(--eb);
+        }
+
+        .bw-dot {
+            width: 30px;
+            height: 18px;
+            border-radius: 99px;
+            background: var(--iborder);
+            position: relative;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .bw-dot::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s;
+        }
+
+        .bw-toggle.on .bw-dot {
+            background: var(--eb);
+        }
+
+        .bw-toggle.on .bw-dot::after {
+            transform: translateX(12px);
+        }
+
+        .bw-label {
+            font-size: 0.78rem;
+            color: #9CA3AF;
+        }
+
+        .sep {
+            border: none;
+            border-top: 1px solid var(--pborder);
+        }
+
+        /* STAGE & CANVAS VIEWPORT */
+        .stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: #040710;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(11, 100, 221, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 191, 179, 0.05) 0%, transparent 50%),
+                radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px;
+            overflow: auto;
+            position: relative;
+        }
+
+        .stage-lbl {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 12px;
+            font-family: var(--f2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stage-lbl span {
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(11, 100, 221, 0.15);
+            color: var(--eb);
+        }
+
+        /* Outer scaling frame for 1920x1080 canvas */
+        .cw-frame {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 32px 64px -16px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* The actual 1920x1080 Poster Canvas */
+        #poster {
+            width: 1920px;
+            height: 1080px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #EEF0F5;
+            overflow: hidden;
+            font-family: var(--f1);
+            transform-origin: top left;
+            user-select: none;
+        }
+
+        /* Noise texture */
+        .p-tex {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+            background-size: 300px 300px;
+        }
+
+        /* TOP-RIGHT DECORATIVE POLYGON */
+        .p-top-right-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 480px;
+            height: 480px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .p-top-right-shape svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* RIGHT PHOTO CONTAINER (X=1100, Y=110, W=660, H=670, Radius=24px) */
+        .p-photo-container {
+            position: absolute;
+            left: 1100px;
+            top: 110px;
+            width: 660px;
+            height: 670px;
+            border-radius: 24px;
+            background: #F4F6FA;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .p-photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 10%;
+            transform-origin: center center;
+        }
+
+        .p-photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background: linear-gradient(145deg, #DCE3F2, #BCC9DE);
+        }
+
+        .p-photo-placeholder svg {
+            width: 120px;
+            height: 120px;
+            opacity: 0.25;
+        }
+
+        .p-photo-placeholder span {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #6B7280;
+            font-family: var(--f2);
+        }
+
+        /* LEFT CONTENT (Start X = 160px) */
+
+        /* LOGO: X = 160px, Y = 60px, H = 130px */
+        .p-logo-wrapper {
+            position: absolute;
+            left: 160px;
+            top: 60px;
+            width: 420px;
+            height: 130px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .p-logo-img {
+            max-width: 420px;
+            max-height: 130px;
+            width: auto;
+            height: 100%;
+            object-fit: contain;
+            object-position: left center;
+        }
+
+        .p-logo-fallback {
+            display: none;
+            align-items: center;
+            gap: 14px;
+            height: 130px;
+        }
+
+        /* 1. "I'M ATTENDING": X = 160px, Y = 208px */
+        .p-eyebrow {
+            position: absolute;
+            left: 160px;
+            top: 208px;
+            font-size: 54px;
+            font-weight: 900;
+            font-style: italic;
+            line-height: 60px;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            z-index: 4;
+        }
+
+        /* 2. EVENT TITLE (Right after I'M ATTENDING): X = 160px, Y = 278px */
+        .p-event-title {
+            position: absolute;
+            left: 160px;
+            top: 278px;
+            font-size: 46px;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: -0.025em;
+            line-height: 52px;
+            z-index: 4;
+        }
+
+        .p-event-title .highlight {
+            color: #0B64DD;
+        }
+
+        /* 3. BOLD BLUE NAME BOX: X = 160px, Y = 350px */
+        .p-name-box {
+            position: absolute;
+            left: 160px;
+            top: 350px;
+            width: fit-content;
+            max-width: 860px;
+            min-height: unset;
+            background: #0B64DD;
+            border-radius: 12px;
+            padding: 22px 36px;
+            display: flex;
+            align-items: center;
+            z-index: 4;
+            box-shadow: 0 10px 24px rgba(11, 100, 221, 0.25);
+        }
+
+        .p-name-text {
+            font-size: 92px;
+            font-weight: 900;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: -0.035em;
+            line-height: 0.95;
+            word-break: break-word;
+            max-width: 780px;
+        }
+
+        .p-name-text.long {
+            font-size: 72px;
+        }
+
+        .p-name-text.very-long {
+            font-size: 54px;
+        }
+
+        /* 4. DESIGNATION: X = 160px, Y = 500px */
+        .p-designation {
+            position: absolute;
+            left: 160px;
+            top: 500px;
+            font-size: 44px;
+            font-weight: 800;
+            color: #0B64DD;
+            line-height: 52px;
+            z-index: 4;
+        }
+
+        /* 5. ORGANIZATION: X = 160px, Y = 560px */
+        .p-organization {
+            position: absolute;
+            left: 160px;
+            top: 560px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0A1628;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            line-height: 36px;
+            z-index: 4;
+        }
+
+        /* 6. TAGLINE: X = 160px, Y = 604px */
+        .p-tagline {
+            position: absolute;
+            left: 160px;
+            top: 604px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0B64DD;
+            text-transform: uppercase;
+            letter-spacing: 2.4px;
+            opacity: 0.88;
+            z-index: 4;
+        }
+
+        /* EVENT DETAILS WITH ICONS: Icon Col X = 160px, Text Col X = 210px */
+        .p-detail-row {
+            position: absolute;
+            left: 160px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 4;
+        }
+
+        .p-detail-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0B64DD;
+            flex-shrink: 0;
+        }
+
+        .p-detail-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .p-detail-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Date Row: Y = 685px */
+        .p-row-date {
+            top: 685px;
+        }
+
+        .p-date-text {
+            font-size: 28px;
+            font-weight: 600;
+            color: #111111;
+        }
+
+        /* Venue Row: Y = 745px */
+        .p-row-venue {
+            top: 745px;
+            align-items: flex-start;
+        }
+
+        .p-venue-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #111111;
+        }
+
+        .p-venue-address {
+            font-size: 21px;
+            font-weight: 500;
+            color: #666666;
+            margin-top: 3px;
+        }
+
+        /* BOTTOM DECORATIVE STRIPE GRAPHIC */
+        .p-bottom-graphic {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 280px;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .p-bottom-graphic svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* BOTTOM CTA TEXT */
+        .p-cta-wrap {
+            position: absolute;
+            right: 140px;
+            bottom: 50px;
+            z-index: 5;
+            text-align: right;
+            pointer-events: none;
+        }
+
+        .p-cta-text {
+            font-size: 38px;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* SPINNER */
+        .spin {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- TOPBAR -->
+        <header class="tb">
+            <div class="tb-l">
+                <div class="tb-badge">E</div>
+                <div>
+                    <div class="tb-title">Elastic{ON} Mumbai 2026 — Graphic Studio</div>
+                    <div class="tb-sub">Production 1920 × 1080 px (16:9) · Editable Vector Composition</div>
+                </div>
+            </div>
+            <div class="tb-r">
+                <button class="btn btn-g" id="resetBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 .49-3.5" />
+                    </svg>
+                    Reset
+                </button>
+                <button class="btn btn-g" id="download4kBtn" title="Export 3840x2160 Ultra HD">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                    </svg>
+                    4K Ultra Export
+                </button>
+                <button class="btn btn-p" id="downloadBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7,10 12,15 17,10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download 1920×1080 PNG
+                </button>
+            </div>
+        </header>
+
+        <!-- WORKSPACE -->
+        <div class="ws">
+
+            <!-- SIDEBAR CONTROLS -->
+            <aside class="sb">
+
+                <!-- SECTION 1: PERSON PROFILE -->
+                <div class="sec">
+                    <div class="sec-t">1 · Person Profile</div>
+
+                    <div class="fg">
+                        <label class="lbl">Portrait Photo</label>
+                        <div class="upz" id="upz">
+                            <input type="file" id="photoInput" accept="image/*">
+                            <img class="upz-img" id="upzPrev" alt="">
+                            <div class="upz-icon" id="upzIcon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B64DD"
+                                    stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21,15 16,10 5,21" />
+                                </svg>
+                            </div>
+                            <div class="upz-m" id="upzM">Upload Portrait Photo</div>
+                            <div class="upz-s">Click or drag &amp; drop · JPG, PNG, WebP</div>
+                        </div>
+                    </div>
+
+                    <div class="fg">
+                        <label class="lbl">Photo Treatment</label>
+                        <div class="bw-toggle" id="bwToggle">
+                            <input type="checkbox" id="bwCheck">
+                            <div class="bw-dot"></div>
+                            <span class="bw-label">Black &amp; White Filter</span>
+                        </div>
+                    </div>
+
+                    <div class="slg">
+                        <div class="slh"><span class="sll">Zoom</span><span class="slv" id="zV">1.00×</span></div>
+                        <input type="range" id="zR" min="0.8" max="3" step="0.05" value="1">
+                    </div>
+                    <div class="slg">
+                        <div class="slh"><span class="sll">Pan X</span><span class="slv" id="pxV">0%</span></div>
+                        <input type="range" id="pxR" min="-50" max="50" step="1" value="0">
+                    </div>
+                    <div class="slg">
+                        <div class="slh"><span class="sll">Pan Y</span><span class="slv" id="pyV">10%</span></div>
+                        <input type="range" id="pyR" min="-50" max="80" step="1" value="10">
+                    </div>
+
+                    <hr class="sep">
+
+                    <div class="fg">
+                        <label class="lbl" for="iName">Full Name</label>
+                        <input class="fi" type="text" id="iName" value="SHIV JANI" placeholder="PERSON NAME">
+                    </div>
+                    <div class="fg">
+                        <label class="lbl" for="iRole">Designation / Role</label>
+                        <input class="fi" type="text" id="iRole" value="Chapter Leader">
+                    </div>
+                    <div class="fg">
+                        <label class="lbl" for="iOrg">Organization / Community</label>
+                        <input class="fi" type="text" id="iOrg" value="ELASTIC USER GROUP GUJARAT">
+                    </div>
+                    <div class="fg">
+                        <label class="lbl" for="iDesc">Supporting Tagline</label>
+                        <input class="fi" type="text" id="iDesc" value="BUILDING COMMUNITIES  •  SHARING KNOWLEDGE">
+                    </div>
+                    <div class="fg">
+                        <label class="lbl">Attendance Badge</label>
+                        <div class="pills" id="bPills">
+                            <button class="pill active" data-v="I'M ATTENDING">I'M ATTENDING</button>
+                            <button class="pill" data-v="SPEAKING AT">SPEAKING AT</button>
+                            <button class="pill" data-v="SPONSORING">SPONSORING</button>
+                            <button class="pill" data-v="ORGANISING">ORGANISING</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: EVENT DETAILS -->
+                <div class="sec">
+                    <div class="sec-t">2 · Event Details</div>
+                    <div class="fg"><label class="lbl" for="iTitle">Event Title</label><input class="fi" type="text"
+                            id="iTitle" value="Elastic{ON} Mumbai - 2026"></div>
+                    <div class="fg"><label class="lbl" for="iDa">Date</label><input class="fi" type="text" id="iDa"
+                            value="30 September 2026"></div>
+                    <div class="fg"><label class="lbl" for="iVe">Venue</label><input class="fi" type="text" id="iVe"
+                            value="JW Marriott Mumbai Sahar"></div>
+                    <div class="fg"><label class="lbl" for="iAddr">Address</label><input class="fi" type="text"
+                            id="iAddr" value="Sahar, Mumbai • Maharashtra 400099"></div>
+                    <div class="fg"><label class="lbl" for="iCl">Bottom CTA Text</label><input class="fi" type="text"
+                            id="iCl" value="See you in Mumbai!"></div>
+                </div>
+
+                <!-- SECTION 3: VISUAL STYLE -->
+                <div class="sec">
+                    <div class="sec-t">3 · Visual Style</div>
+                    <div class="fg">
+                        <label class="lbl">Primary Brand Color</label>
+                        <div class="cdots" id="cDots">
+                            <div class="cdot sel" style="background:#0B64DD" data-c="#0B64DD" title="Elastic Blue">
+                            </div>
+                            <div class="cdot" style="background:#00BFB3" data-c="#00BFB3" title="Teal"></div>
+                            <div class="cdot" style="background:#BC1E70" data-c="#BC1E70" title="Magenta"></div>
+                            <div class="cdot" style="background:#008B87" data-c="#008B87" title="Deep Teal"></div>
+                            <div class="cdot" style="background:#05164D" data-c="#05164D" title="Navy"></div>
+                            <div class="cdot" style="background:#0D0D0D" data-c="#0D0D0D" title="Black"></div>
+                        </div>
+                    </div>
+                    <div class="fg">
+                        <label class="lbl">Background Tone</label>
+                        <div class="cdots" id="bgDots">
+                            <div class="cdot sel" style="background:#EEF0F5" data-bg="#EEF0F5" title="Light Slate">
+                            </div>
+                            <div class="cdot" style="background:#FFFFFF" data-bg="#FFFFFF" title="Pure White"></div>
+                            <div class="cdot" style="background:#F5F0E8" data-bg="#F5F0E8" title="Warm Off-White"></div>
+                            <div class="cdot" style="background:#EAF0FF" data-bg="#EAF0FF" title="Cool Tint"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- STAGE VIEWPORT -->
+            <main class="stage">
+                <div class="stage-lbl">
+                    LIVE PREVIEW <span>1920 × 1080 PX (16:9)</span> EXACT SPEC CANVAS
+                </div>
+
+                <div class="cw-frame" id="cwFrame">
+                    <!-- 1920x1080 GRAPHIC POSTER -->
+                    <div id="poster">
+
+                        <!-- Background Noise Texture -->
+                        <div class="p-tex"></div>
+
+                        <!-- Top-Right Geometric Polygon -->
+                        <div class="p-top-right-shape">
+                            <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="120,0 480,0 480,360" id="topRightPoly" fill="#0B64DD" opacity="0.16" />
+                            </svg>
+                        </div>
+
+                        <!-- Right Photo Container (X=1100, Y=110, W=660, H=670, Radius=24px) -->
+                        <div class="p-photo-container">
+                            <img id="pImg" class="p-photo-img" src="shiv-portrait.png" alt="Person Photo"
+                                onerror="this.style.display='none';document.getElementById('pPh').style.display='flex'">
+                            <div class="p-photo-placeholder" id="pPh" style="display:none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                <span>PORTRAIT PHOTOGRAPH</span>
+                            </div>
+                        </div>
+
+                        <!-- LOGO (X=160px, Y=65px) -->
+                        <div class="p-logo-wrapper">
+                            <img class="p-logo-img" id="eLogo" src="logo-elastic-trimmed.png" alt="elastic"
+                                onerror="this.style.display='none';document.getElementById('eLogoFb').style.display='flex'">
+                            <div class="p-logo-fallback" id="eLogoFb">
+                                <svg height="90" viewBox="0 0 160 40" fill="none">
+                                    <circle cx="12" cy="12" r="10" fill="#F04E98" />
+                                    <circle cx="32" cy="12" r="10" fill="#00BFB3" />
+                                    <circle cx="12" cy="30" r="10" fill="#FEC514" />
+                                    <circle cx="32" cy="30" r="10" fill="#0B64DD" />
+                                    <text x="50" y="28" font-family="Inter,sans-serif" font-weight="700" font-size="26"
+                                        fill="#1A1A1A" letter-spacing="-0.5">elastic</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- "I'M ATTENDING" -->
+                        <div class="p-eyebrow" id="dBadge">I'M ATTENDING</div>
+
+                        <!-- EVENT TITLE -->
+                        <div class="p-event-title" id="dTitle">
+                            Elastic<span class="highlight" id="dBrace">{ON}</span> Mumbai - 2026
+                        </div>
+
+                        <!-- BLUE NAME BOX -->
+                        <div class="p-name-box" id="pNameBox">
+                            <div class="p-name-text" id="dName">SHIV JANI</div>
+                        </div>
+
+                        <!-- DESIGNATION -->
+                        <div class="p-designation" id="dRole">Chapter Leader</div>
+
+                        <!-- ORGANIZATION -->
+                        <div class="p-organization" id="dOrg">ELASTIC USER GROUP GUJARAT</div>
+
+                        <!-- SUPPORTING TAGLINE -->
+                        <div class="p-tagline" id="dDesc">BUILDING COMMUNITIES • SHARING KNOWLEDGE</div>
+
+                        <!-- EVENT DETAILS WITH ICONS -->
+                        <!-- Row 1: Date (Y=782px) -->
+                        <div class="p-detail-row p-row-date">
+                            <div class="p-detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="p-detail-content">
+                                <div class="p-date-text" id="dDa">30 September 2026</div>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Venue & Address (Y=835px) -->
+                        <div class="p-detail-row p-row-venue">
+                            <div class="p-detail-icon" style="margin-top:2px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="p-detail-content">
+                                <div class="p-venue-title" id="dVe">JW Marriott Mumbai Sahar</div>
+                                <div class="p-venue-address" id="dAddr">Sahar, Mumbai • Maharashtra 400099</div>
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM DECORATIVE STRIPE GRAPHIC -->
+                        <div class="p-bottom-graphic">
+                            <svg viewBox="0 0 1920 280" preserveAspectRatio="none" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <!-- Main Primary Blue Diagonal Band -->
+                                <polygon points="420,280 1920,80 1920,280" id="bottomPoly1" fill="#0B64DD" />
+                                <!-- Shadow Layer -->
+                                <polygon points="420,280 1920,130 1920,280" fill="rgba(0,0,0,0.18)" />
+                                <!-- Vibrant Cyan Accent Line -->
+                                <polygon points="420,280 1920,70 1920,82" fill="#00BFB3" opacity="0.85" />
+                            </svg>
+                        </div>
+
+                        <!-- BOTTOM CTA TEXT -->
+                        <div class="p-cta-wrap">
+                            <div class="p-cta-text" id="dCl">See you in Mumbai!</div>
+                        </div>
+
+                    </div><!-- /#poster -->
+                </div><!-- /.cw-frame -->
+
+            </main>
+        </div><!-- /.ws -->
+    </div><!-- /.app -->
+
+    <script>
+        // GRAPHIC CONFIG STATE
+        let P = {
+            image: 'shiv-portrait.png',
+            name: 'SHIV JANI',
+            designation: 'Chapter Leader',
+            organization: 'ELASTIC USER GROUP GUJARAT',
+            tagline: 'BUILDING COMMUNITIES  •  SHARING KNOWLEDGE',
+            badge: "I'M ATTENDING",
+            zoom: 1.15,
+            panX: 0,
+            panY: 5,
+            bw: false
+        };
+
+        let E = {
+            title: 'Elastic{ON} Mumbai - 2026',
+            date: '30 September 2026',
+            venue: 'JW Marriott Mumbai Sahar',
+            address: 'Sahar, Mumbai • Maharashtra 400099',
+            url: 'elastic.co/events/elasticon/mumbai',
+            closing: 'See you in Mumbai!'
+        };
+
+        let V = {
+            color: '#0B64DD',
+            bg: '#EEF0F5'
+        };
+
+        const G = id => document.getElementById(id);
+
+        // AUTO RESPONSIVE CANVAS SCALE HANDLER
+        function fitCanvas() {
+            const frame = G('cwFrame');
+            const poster = G('poster');
+            if (!frame || !poster) return;
+            const frameWidth = frame.clientWidth;
+            const scale = frameWidth / 1920;
+            poster.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', fitCanvas);
+
+        // RENDER FUNCTION
+        function render() {
+            const rawName = (P.name || 'YOUR NAME').trim().toUpperCase();
+            const ne = G('dName');
+            ne.textContent = rawName;
+            ne.className = 'p-name-text';
+            if (rawName.length > 18) ne.classList.add('very-long');
+            else if (rawName.length > 13) ne.classList.add('long');
+
+            G('dBadge').textContent = P.badge;
+            G('dRole').textContent = P.designation || 'Your Role';
+            G('dOrg').textContent = P.organization || 'Your Organization';
+            G('dDesc').textContent = P.tagline || 'BUILDING COMMUNITIES  •  SHARING KNOWLEDGE';
+
+            // Event title highlight logic
+            const titleText = E.title || 'Elastic{ON} Mumbai - 2026';
+            if (titleText.includes('{ON}')) {
+                const parts = titleText.split('{ON}');
+                G('dTitle').innerHTML = `${parts[0]}<span class="highlight" id="dBrace">{ON}</span>${parts[1]}`;
+            } else {
+                G('dTitle').textContent = titleText;
+            }
+
+            G('dDa').textContent = E.date;
+            G('dVe').textContent = E.venue;
+            G('dAddr').textContent = E.address;
+            G('dCl').textContent = E.closing;
+
+            // Photo treatment
+            const img = G('pImg'), ph = G('pPh');
+            if (P.image) {
+                img.src = P.image;
+                img.style.display = 'block';
+                ph.style.display = 'none';
+                img.style.transform = `scale(${P.zoom}) translate(${P.panX}%, ${P.panY}%)`;
+                img.style.transformOrigin = 'center center';
+                img.style.filter = P.bw ? 'grayscale(100%) contrast(1.05)' : 'none';
+            } else {
+                img.style.display = 'none';
+                ph.style.display = 'flex';
+            }
+
+            // Theme colors
+            const c = V.color;
+            G('pNameBox').style.background = c;
+            G('bottomPoly1').setAttribute('fill', c);
+            G('topRightPoly').setAttribute('fill', c);
+            G('dRole').style.color = c;
+            G('dDesc').style.color = c;
+            const brace = G('dBrace');
+            if (brace) brace.style.color = c;
+            document.querySelectorAll('.p-detail-icon').forEach(ic => ic.style.color = c);
+            G('poster').style.background = V.bg;
+
+            fitCanvas();
+        }
+
+        // BIND FORM CONTROLS
+        function bind() {
+            const inputs = [
+                ['iName', v => P.name = v],
+                ['iRole', v => P.designation = v],
+                ['iOrg', v => P.organization = v],
+                ['iDesc', v => P.tagline = v],
+                ['iTitle', v => E.title = v],
+                ['iDa', v => E.date = v],
+                ['iVe', v => E.venue = v],
+                ['iAddr', v => E.address = v],
+                ['iCl', v => E.closing = v]
+            ];
+
+            inputs.forEach(([id, fn]) => {
+                const el = G(id);
+                if (el) el.addEventListener('input', e => { fn(e.target.value); render(); });
+            });
+
+            G('zR').addEventListener('input', e => { P.zoom = +e.target.value; G('zV').textContent = P.zoom.toFixed(2) + '×'; render(); });
+            G('pxR').addEventListener('input', e => { P.panX = +e.target.value; G('pxV').textContent = P.panX + '%'; render(); });
+            G('pyR').addEventListener('input', e => { P.panY = +e.target.value; G('pyV').textContent = P.panY + '%'; render(); });
+
+            G('bPills').querySelectorAll('.pill').forEach(b => b.addEventListener('click', () => {
+                G('bPills').querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                P.badge = b.dataset.v;
+                render();
+            }));
+
+            document.querySelectorAll('.cdot[data-c]').forEach(d => d.addEventListener('click', () => {
+                document.querySelectorAll('.cdot[data-c]').forEach(x => x.classList.remove('sel'));
+                d.classList.add('sel');
+                V.color = d.dataset.c;
+                render();
+            }));
+
+            document.querySelectorAll('.cdot[data-bg]').forEach(d => d.addEventListener('click', () => {
+                document.querySelectorAll('.cdot[data-bg]').forEach(x => x.classList.remove('sel'));
+                d.classList.add('sel');
+                V.bg = d.dataset.bg;
+                render();
+            }));
+
+            G('bwToggle').addEventListener('click', () => {
+                P.bw = !P.bw;
+                G('bwToggle').classList.toggle('on', P.bw);
+                render();
+            });
+        }
+
+        // IMAGE UPLOAD HANDLER
+        function initUpload() {
+            const upz = G('upz'), inp = G('photoInput'),
+                prev = G('upzPrev'), ico = G('upzIcon'), m = G('upzM');
+
+            function load(file) {
+                if (!file || !file.type.startsWith('image/')) return;
+                const r = new FileReader();
+                r.onload = ev => {
+                    P.image = ev.target.result;
+                    prev.src = ev.target.result;
+                    prev.style.display = 'block';
+                    ico.style.display = 'none';
+                    m.textContent = file.name.length > 22 ? file.name.slice(0, 20) + '…' : file.name;
+                    render();
+                };
+                r.readAsDataURL(file);
+            }
+
+            inp.addEventListener('change', e => load(e.target.files[0]));
+            upz.addEventListener('dragover', e => { e.preventDefault(); upz.classList.add('drag-over'); });
+            upz.addEventListener('dragleave', () => upz.classList.remove('drag-over'));
+            upz.addEventListener('drop', e => { e.preventDefault(); upz.classList.remove('drag-over'); load(e.dataTransfer.files[0]); });
+        }
+
+        // RESET ALL FIELDS
+        G('resetBtn').addEventListener('click', () => {
+            if (!confirm('Reset all fields to default values?')) return;
+            P = {
+                image: 'shiv-portrait.png',
+                name: 'SHIV JANI',
+                designation: 'Chapter Leader',
+                organization: 'ELASTIC USER GROUP GUJARAT',
+                tagline: 'BUILDING COMMUNITIES  •  SHARING KNOWLEDGE',
+                badge: "I'M ATTENDING",
+                zoom: 1.15, panX: 0, panY: 5, bw: false
+            };
+            E = {
+                title: 'Elastic{ON} Mumbai - 2026',
+                date: '30 September 2026',
+                venue: 'JW Marriott Mumbai Sahar',
+                address: 'Sahar, Mumbai • Maharashtra 400099',
+                closing: 'See you in Mumbai!'
+            };
+            V = { color: '#0B64DD', bg: '#EEF0F5' };
+
+            G('iName').value = P.name;
+            G('iRole').value = P.designation;
+            G('iOrg').value = P.organization;
+            G('iDesc').value = P.tagline;
+            G('iTitle').value = E.title;
+            G('iDa').value = E.date;
+            G('iVe').value = E.venue;
+            G('iAddr').value = E.address;
+            G('iCl').value = E.closing;
+
+            G('zR').value = 1; G('zV').textContent = '1.00×';
+            G('pxR').value = 0; G('pxV').textContent = '0%';
+            G('pyR').value = 10; G('pyV').textContent = '10%';
+            G('upzPrev').style.display = 'none'; G('upzIcon').style.display = 'flex';
+            G('upzM').textContent = 'Upload Portrait Photo'; G('photoInput').value = '';
+            G('bwToggle').classList.remove('on');
+            G('bPills').querySelectorAll('.pill').forEach((b, i) => b.classList.toggle('active', i === 0));
+            document.querySelectorAll('.cdot[data-c]').forEach((d, i) => d.classList.toggle('sel', i === 0));
+            document.querySelectorAll('.cdot[data-bg]').forEach((d, i) => d.classList.toggle('sel', i === 0));
+
+            render();
+        });
+
+        // DOWNLOAD 1920x1080 HIGH-RES PNG
+        async function exportGraphic(targetScale = 1, filenameSuffix = '1920x1080') {
+            const btn = G('downloadBtn'), orig = btn.innerHTML;
+            btn.innerHTML = '<div class="spin"></div> Rendering…';
+            btn.disabled = true;
+
+            try {
+                const poster = G('poster');
+                // Save current transform
+                const origTransform = poster.style.transform;
+                poster.style.transform = 'none'; // Render at full native 1920x1080
+
+                const c = await html2canvas(poster, {
+                    width: 1920,
+                    height: 1080,
+                    scale: targetScale,
+                    useCORS: true,
+                    allowTaint: false,
+                    backgroundColor: V.bg,
+                    logging: false,
+                    imageTimeout: 25000,
+                    onclone: doc => {
+                        const cp = doc.getElementById('poster');
+                        if (cp) cp.style.transform = 'none';
+                    }
+                });
+
+                // Restore preview transform
+                poster.style.transform = origTransform;
+                fitCanvas();
+
+                const link = document.createElement('a');
+                const slug = (P.name || 'graphic').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                link.download = `elasticon-mumbai-2026-${slug}-${filenameSuffix}.png`;
+                link.href = c.toDataURL('image/png', 1.0);
+                link.click();
+            } catch (err) {
+                console.error(err);
+                alert('Export failed: ' + err.message);
+            } finally {
+                btn.innerHTML = orig;
+                btn.disabled = false;
+            }
+        }
+
+        G('downloadBtn').addEventListener('click', () => exportGraphic(1, '1920x1080'));
+        G('download4kBtn').addEventListener('click', () => exportGraphic(2, '3840x2160-4K'));
+
+        // INITIALIZE STUDIO
+        bind();
+        initUpload();
+        render();
+        setTimeout(fitCanvas, 100);
+    </script>
+</body>
+
+</html>
